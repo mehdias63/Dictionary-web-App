@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: 'Inter';
+	src: url('/public/assets/fonts/inter/static/Inter-Bold.ttf')
+		format('truetype');
+}
+
+@font-face {
+	font-family: 'Lora';
+	src: url('/public/assets/fonts/lora/static/Lora-Bold.ttf')
+		format('truetype');
+}
+
+@font-face {
+	font-family: 'Inconsolata';
+	src: url('/public/assets/fonts/inconsolata/static/Inconsolata-Bold.ttf')
+		format('truetype');
+}
+
+body {
+	font-family: 'Inter', sans-serif; /* فونت پیشفرض */
+	background-color: rgb(var(--background-app-rgb));
+}
