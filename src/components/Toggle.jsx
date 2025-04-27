@@ -1,5 +1,5 @@
 import { Switch } from '@headlessui/react'
-import { useDarkMode } from './DarkMode' // مسیر درست نسبت به پروژه تو باید چک بشه
+import { useDarkMode } from '../context/DarkModeContext'
 
 function Toggle() {
 	const { isDarkMode, toggleDarkMode } = useDarkMode()
