@@ -28,6 +28,43 @@ export default {
 				},
 				error: withOpacity('--color-error'),
 			},
+			fontSize: {
+				'heading-l': [
+					'64px',
+					{
+						lineHeight: '77px',
+						fontWeight: 'bold',
+					},
+				],
+				'heading-m': [
+					'24px',
+					{
+						lineHeight: '29px',
+						fontWeight: '400',
+					},
+				],
+				'heading-s': [
+					'20px',
+					{
+						lineHeight: '24px',
+						fontWeight: '400',
+					},
+				],
+				'body-m': [
+					'18px',
+					{
+						lineHeight: '24px',
+						fontWeight: '400',
+					},
+				],
+				'body-s': [
+					'14px',
+					{
+						lineHeight: '17px',
+						fontWeight: '400',
+					},
+				],
+			},
 		},
 	},
 	plugins: [],

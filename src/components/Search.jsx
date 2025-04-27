@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SearchIcon, Volume2Icon, XCircleIcon } from 'lucide-react'
+import { SearchIcon, XCircleIcon } from 'lucide-react'
 import { useDarkMode } from '../context/DarkModeContext'
 import { useSearch } from '../context/SearchContext'
 import axios from 'axios'
@@ -22,6 +22,7 @@ export default function Search() {
 	const [inputTouched, setInputTouched] = useState(false)
 	const [emptySearchError, setEmptySearchError] = useState(false)
 	async function handleSearch(word = query) {
+		setInputTouched(true)
 		const trimmedWord = word.trim()
 		if (!trimmedWord) {
 			setResult(null)
@@ -33,6 +34,7 @@ export default function Search() {
 		setLoading(true)
 		setError('')
 		setEmptySearchError(false)
+		setInputTouched(true)
 		try {
 			const res = await axios.get(
 				`https://api.dictionaryapi.dev/api/v2/entries/en/${trimmedWord}`,
@@ -47,7 +49,7 @@ export default function Search() {
 			}
 		} catch (error) {
 			setResult(null)
-			setError('مشکلی در دریافت اطلاعات پیش آمد.')
+			setError('Something is wrong!')
 		}
 		setLoading(false)
 	}
@@ -81,11 +83,13 @@ export default function Search() {
 						setQuery(e.target.value)
 						fetchSuggestions(e.target.value)
 						setInputTouched(false)
+						if (emptySearchError) setEmptySearchError(false)
+						if (error) setError(false)
 					}}
 					onKeyDown={e => e.key === 'Enter' && handleSearch()}
-					className={`border p-2 pl-10 rounded w-full transition-all duration-300 focus:border focus:border-primary-50
+					className={`border p-4 rounded-lg w-full bg-primary-200 text-primary-900 transition-all duration-300 placeholder:text-[1.25rem] placeholder:opacity-25 placeholder:text-primary-600 focus:ring-0 focus:outline-none focus:border focus:border-primary-50
             ${
-							inputTouched && error
+							error || emptySearchError
 								? 'border-error'
 								: 'border-gray-300'
 						}`}
@@ -95,12 +99,12 @@ export default function Search() {
 				{query ? (
 					<XCircleIcon
 						onClick={resetSearch}
-						className="absolute top-2 right-2 text-gray-400 hover:text-red-500 cursor-pointer"
+						className="absolute top-4 right-4 text-gray-400 hover:text-red-500 cursor-pointer"
 						size={20}
 					/>
 				) : (
 					<SearchIcon
-						className="absolute top-2 right-2 text-gray-400"
+						className="absolute top-4 right-4 text-gray-400"
 						size={20}
 					/>
 				)}
@@ -130,9 +134,13 @@ export default function Search() {
 				</ul>
 			)}
 
-			{loading && <p className="mt-4">در حال جستجو...</p>}
+			{loading && <p className="mt-4">Is Loading ....</p>}
 
-			{emptySearchError && <p>Whoops, can’t be empty...</p>}
+			{emptySearchError && (
+				<p className="text-heading-s mt-4 text-error">
+					Whoops, can’t be empty...
+				</p>
+			)}
 
 			{error && !emptySearchError && (
 				<div className="flex flex-col items-center justify-center mt-40">
@@ -154,12 +162,17 @@ export default function Search() {
 				>
 					<div className="flex items-center justify-between">
 						<div>
-							<h2 className="text-xl font-bold">{result.word}</h2>
-							<p className="text-sm italic">{result.phonetic}</p>
+							<h2 className="text-heading-l">{result.word}</h2>
+							<p className="text-heading-m text-primary-50 mt-2">
+								{result.phonetic}
+							</p>
+							<p className="text-heading-m text-primary-50 mt-2">
+								{result.partOfSpeech}
+							</p>
 						</div>
 						{result.phonetics[0]?.audio && (
 							<button onClick={playAudio}>
-								<Volume2Icon size={24} className="text-indigo-500" />
+								<img src="/public/assets/images/icon-play.svg" />
 							</button>
 						)}
 					</div>
