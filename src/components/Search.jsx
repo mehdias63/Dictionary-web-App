@@ -49,7 +49,7 @@ export default function Search() {
 			}
 		} catch (error) {
 			setResult(null)
-			setError('Something is wrong!')
+			setError('No Definitions Found')
 		}
 		setLoading(false)
 	}
@@ -74,7 +74,7 @@ export default function Search() {
 	}
 
 	return (
-		<div className="pt-4 w-full">
+		<div className="pt-4 w-full text-primary-900">
 			<div className="relative">
 				<input
 					type="text"
@@ -87,7 +87,7 @@ export default function Search() {
 						if (error) setError(false)
 					}}
 					onKeyDown={e => e.key === 'Enter' && handleSearch()}
-					className={`border p-4 rounded-lg w-full bg-primary-200 text-primary-900 transition-all duration-300 placeholder:text-[1.25rem] placeholder:opacity-25 placeholder:text-primary-600 focus:ring-0 focus:outline-none focus:border focus:border-primary-50
+					className={`border p-4 rounded-lg w-full bg-primary-200 text-primary-900 transition-all duration-300 placeholder:text-[1.25rem] placeholder:opacity-25 placeholder:text-primary-400 focus:ring-0 focus:outline-none focus:border focus:border-primary-50
             ${
 							error || emptySearchError
 								? 'border-error'
@@ -103,9 +103,10 @@ export default function Search() {
 						size={20}
 					/>
 				) : (
-					<SearchIcon
-						className="absolute top-4 right-4 text-gray-400"
-						size={20}
+					<img
+						src="/public/assets/images/icon-search.svg"
+						className="absolute top-5 right-4 text-gray-400"
+						alt="search"
 					/>
 				)}
 			</div>
@@ -153,32 +154,91 @@ export default function Search() {
 					</p>
 				</div>
 			)}
-
 			{result && (
-				<div
-					className={`mt-4 p-4 rounded ${
-						isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-100'
-					}`}
-				>
+				<div className="mt-4 p-4 rounded">
 					<div className="flex items-center justify-between">
 						<div>
-							<h2 className="text-heading-l">{result.word}</h2>
-							<p className="text-heading-m text-primary-50 mt-2">
+							<h2 className="text-[2rem] sm:text-heading-l">
+								{result.word}
+							</h2>
+							<p className="text-body-m sm:text-heading-m text-primary-50 mt-2">
 								{result.phonetic}
-							</p>
-							<p className="text-heading-m text-primary-50 mt-2">
-								{result.partOfSpeech}
 							</p>
 						</div>
 						{result.phonetics[0]?.audio && (
 							<button onClick={playAudio}>
-								<img src="/public/assets/images/icon-play.svg" />
+								<img
+									src="/public/assets/images/icon-play.svg"
+									alt="Play"
+								/>
 							</button>
 						)}
 					</div>
-					<p className="mt-4">
-						{result.meanings[0]?.definitions[0]?.definition}
-					</p>
+
+					{/* تمام معانی کلمه و نقش های دستوری */}
+					{result.meanings.map((meaning, idx) => (
+						<div key={idx} className="mt-8">
+							<div className="flex items-center gap-4">
+								<p className="text-lg sm:text-heading-m">
+									{meaning.partOfSpeech}
+								</p>
+								<div className="flex-grow border-t border-primary-500" />
+							</div>
+							<h2 className="mt-8 text-primary-400 text-[1rem] sm:text-heading-s mb-4">
+								Meaning
+							</h2>
+
+							{/* تعریف‌ها */}
+							<ul className="list-disc ml-6 mt-4 space-y-4 marker:text-primary-50 text-[0.9375rem] sm:text-body-m">
+								{meaning.definitions.map((def, defIdx) => (
+									<li key={defIdx}>
+										{def.definition}
+										{def.example && (
+											<p className="text-primary-400 mt-1 text-sm mt-4">
+												"{def.example}"
+											</p>
+										)}
+									</li>
+								))}
+							</ul>
+
+							{/* مشتق اسم/فعل */}
+							{meaning.synonyms && meaning.synonyms.length > 0 && (
+								<div className=" flex items-center mt-6 gap-x-5">
+									<p className="text-primary-400 text-[1rem] sm:text-heading-s">
+										Synonyms
+									</p>
+									<div className="flex flex-wrap gap-x-3">
+										{meaning.synonyms
+											.slice(0, 5)
+											.map((syn, synIdx) => (
+												<span
+													key={synIdx}
+													className="text-primary-50 text-sm"
+												>
+													{syn}
+												</span>
+											))}
+									</div>
+								</div>
+							)}
+						</div>
+					))}
+
+					{/* لینک سورس دیکشنری */}
+					{result.sourceUrls && (
+						<div className="mt-8 border-t pt-4 border-primary-500 mb-20 sm:flex sm:gap-x-4">
+							<p className="text-sm text-primary-400">Source:</p>
+							<a
+								href={result.sourceUrls[0]}
+								target="_blank"
+								rel="noreferrer"
+								className="underline text-sm"
+							>
+								{result.sourceUrls[0]}
+							</a>
+						</div>
+					)}
 				</div>
 			)}
 		</div>
