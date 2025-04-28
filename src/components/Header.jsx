@@ -14,7 +14,7 @@ export default function Header({ onFontChange }) {
 	return (
 		<header className="p-4 flex justify-between items-center w-full">
 			<div className="flex items-center space-x-4">
-				<img src="/public/assets/images/logo.svg" />
+				<img src="/assets/images/logo.svg" alt="logo" />
 			</div>
 			<div className="flex items-center gap-x-12">
 				<select

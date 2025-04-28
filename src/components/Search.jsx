@@ -104,7 +104,7 @@ export default function Search() {
 					/>
 				) : (
 					<img
-						src="/public/assets/images/icon-search.svg"
+						src="/assets/images/icon-search.svg"
 						className="absolute top-5 right-4 text-gray-400"
 						alt="search"
 					/>
@@ -167,10 +167,7 @@ export default function Search() {
 						</div>
 						{result.phonetics[0]?.audio && (
 							<button onClick={playAudio}>
-								<img
-									src="/public/assets/images/icon-play.svg"
-									alt="Play"
-								/>
+								<img src="/assets/images/icon-play.svg" alt="Play" />
 							</button>
 						)}
 					</div>
