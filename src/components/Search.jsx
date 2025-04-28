@@ -74,7 +74,7 @@ export default function Search() {
 	}
 
 	return (
-		<div className="pt-4 w-full text-primary-900">
+		<div className="pt-4 w-full text-primary-900 px-2">
 			<div className="relative">
 				<input
 					type="text"
@@ -145,9 +145,9 @@ export default function Search() {
 
 			{error && !emptySearchError && (
 				<div className="flex flex-col items-center justify-center mt-40">
-					<span>😕</span>
-					<h2 className="text-2xl font-semibold">{error}</h2>
-					<p>
+					<span className="text-[4rem]">😕</span>
+					<h2 className="text-xl font-bold mt-8">{error}</h2>
+					<p className="text-body-m mt-5 text-center text-primary-400">
 						Sorry pal, we couldn't find definitions for the word you
 						were looking for. You can try the search again at later
 						time or head to the web instead.
