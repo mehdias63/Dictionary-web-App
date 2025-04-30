@@ -3,6 +3,7 @@ import { SearchIcon, XCircleIcon } from 'lucide-react'
 import { useDarkMode } from '../context/DarkModeContext'
 import { useSearch } from '../context/SearchContext'
 import axios from 'axios'
+import { Input } from './ui/input'
 
 export default function Search() {
 	const {
@@ -76,8 +77,8 @@ export default function Search() {
 	return (
 		<div className="pt-4 w-full text-primary-900 px-2">
 			<div className="relative">
-				<input
-					type="text"
+				<Input
+					placeholder="Search for any word…"
 					value={query}
 					onChange={e => {
 						setQuery(e.target.value)
@@ -87,15 +88,9 @@ export default function Search() {
 						if (error) setError(false)
 					}}
 					onKeyDown={e => e.key === 'Enter' && handleSearch()}
-					className={`border p-4 rounded-lg w-full bg-primary-200 text-primary-900 transition-all duration-300 placeholder:text-[1.25rem] placeholder:opacity-25 placeholder:text-primary-400 focus:ring-0 focus:outline-none focus:border focus:border-primary-50
-            ${
-							error || emptySearchError
-								? 'border-error'
-								: 'border-gray-300'
-						}`}
-					placeholder="Search for any word…"
+					className={`placeholder:opacity-25 placeholder:text-primary-400 
+						${error || emptySearchError ? 'border-error' : 'border-gray-300'}`}
 				/>
-
 				{query ? (
 					<XCircleIcon
 						onClick={resetSearch}
@@ -105,7 +100,7 @@ export default function Search() {
 				) : (
 					<img
 						src="/assets/images/icon-search.svg"
-						className="absolute top-5 right-4 text-gray-400"
+						className="absolute top-4 right-4 text-gray-400"
 						alt="search"
 					/>
 				)}
@@ -115,7 +110,7 @@ export default function Search() {
 				<ul
 					className={`border rounded mt-2 shadow ${
 						isDarkMode
-							? 'bg-gray-700 text-white'
+							? 'bg-primary-500 text-white'
 							: 'bg-white text-black'
 					}`}
 				>
@@ -127,7 +122,7 @@ export default function Search() {
 								setSuggestions([])
 								handleSearch(item)
 							}}
-							className="p-2 hover:bg-gray-200 cursor-pointer"
+							className="p-2 hover:bg-primary-700 cursor-pointer hover:text-primary-200"
 						>
 							{item}
 						</li>
