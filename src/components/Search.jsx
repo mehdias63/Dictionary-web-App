@@ -162,12 +162,34 @@ export default function Search() {
 						</div>
 						{result.phonetics[0]?.audio && (
 							<button onClick={playAudio}>
-								<img src="/assets/images/icon-play.svg" alt="Play" />
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="75"
+									height="75"
+									viewBox="0 0 75 75"
+									fill="none"
+									className="transition-all duration-300 hover:scale-105 cursor-pointer"
+								>
+									<circle
+										opacity="0.25"
+										cx="37.5"
+										cy="37.5"
+										r="37.5"
+										fill="#A445ED"
+										className="fill-[#A445ED] hover:fill-purple-900 transition-colors"
+									/>
+									<path
+										fill-rule="evenodd"
+										clip-rule="evenodd"
+										d="M29 27V48L50 37.5L29 27Z"
+										fill="#A445ED"
+										className="fill-[#A445ED] hover:fill-purple-900 transition-colors"
+									/>
+								</svg>
 							</button>
 						)}
 					</div>
 
-					{/* تمام معانی کلمه و نقش های دستوری */}
 					{result.meanings.map((meaning, idx) => (
 						<div key={idx} className="mt-8">
 							<div className="flex items-center gap-4">
@@ -180,7 +202,6 @@ export default function Search() {
 								Meaning
 							</h2>
 
-							{/* تعریف‌ها */}
 							<ul className="list-disc ml-6 mt-4 space-y-4 marker:text-primary-50 text-[0.9375rem] sm:text-body-m">
 								{meaning.definitions.map((def, defIdx) => (
 									<li key={defIdx}>
@@ -194,7 +215,6 @@ export default function Search() {
 								))}
 							</ul>
 
-							{/* مشتق اسم/فعل */}
 							{meaning.synonyms && meaning.synonyms.length > 0 && (
 								<div className=" flex items-center mt-6 gap-x-5">
 									<p className="text-primary-400 text-[1rem] sm:text-heading-s">
@@ -217,7 +237,6 @@ export default function Search() {
 						</div>
 					))}
 
-					{/* لینک سورس دیکشنری */}
 					{result.sourceUrls && (
 						<div className="mt-8 border-t pt-4 border-primary-500 mb-20 sm:flex sm:gap-x-4">
 							<p className="text-sm text-primary-400">Source:</p>
